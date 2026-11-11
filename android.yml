@@ -1,0 +1,41 @@
+name: Osmanlı Tarayıcı APK Derle
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main", "master" ]
+    tags: [ "v*" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu indir
+        uses: actions/checkout@v4
+
+      - name: Java 17 kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Gradle kur
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Android SDK kur
+        uses: android-actions/setup-android@v3
+
+      - name: APK derle
+        run: gradle --no-daemon assembleDebug
+
+      - name: APK dosyasını yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: Osmanli-Tarayici-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
