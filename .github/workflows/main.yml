@@ -1,4 +1,3 @@
-
 name: Osmanlı Tarayıcı APK Derle
 
 on:
@@ -32,9 +31,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
-
-      - name: Android SDK kur
-        uses: android-actions/setup-android@v3
 
       - name: Android lisanslarını kabul et
         run: yes | sdkmanager --licenses || true
